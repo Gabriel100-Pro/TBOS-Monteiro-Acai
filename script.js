@@ -40,6 +40,7 @@ let hasCounted = false;
 
 const animateCounter = (counter) => {
   const targetRaw = counter.dataset.target || "0";
+  const suffix = counter.dataset.suffix || "";
   const target = Number(targetRaw);
   const isDecimal = targetRaw.includes(".");
   const duration = 1200;
@@ -49,7 +50,8 @@ const animateCounter = (counter) => {
     const progress = Math.min((now - start) / duration, 1);
     const value = target * (1 - Math.pow(1 - progress, 3));
 
-    counter.textContent = isDecimal ? value.toFixed(1) : Math.round(value).toString();
+    const baseValue = isDecimal ? value.toFixed(1) : Math.round(value).toString();
+    counter.textContent = `${baseValue}${suffix}`;
 
     if (progress < 1) {
       requestAnimationFrame(update);
